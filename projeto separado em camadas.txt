@@ -1,0 +1,10 @@
+projeto separado em camadas:
+controller 
+module
+service
+
+criar uma pasta chamada todos dentro do src.
+dentro do todos vai ter controller, module, service. 
+dentro da pasta DTO tem apenas Create e Update.
+não precisa ter um dto de create. porque nos ja tipamos os dados. ja na
+hora de validar os dados para ver se realmente que oque voce esta mandando é uma string
