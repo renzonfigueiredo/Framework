@@ -8,3 +8,11 @@ dentro do todos vai ter controller, module, service.
 dentro da pasta DTO tem apenas Create e Update.
 não precisa ter um dto de create. porque nos ja tipamos os dados. ja na
 hora de validar os dados para ver se realmente que oque voce esta mandando é uma string
+
+06/03/2026
+criar o repository e o use-cases
+
+@ é um decorator
+cada arquivo depende de outra coisa para funcionar. o nosso repository é responsavel
+por consultar dados. e depende do prisma para fazer a consulta no banco
+nem toda função é obrigada a ter paramentro 
