@@ -1,18 +1,35 @@
-projeto separado em camadas:
-controller 
-module
-service
+1. Arquitetura em Camadas
+O projeto é dividido em camadas de responsabilidade para garantir organização e escalabilidade:
 
-criar uma pasta chamada todos dentro do src.
-dentro do todos vai ter controller, module, service. 
-dentro da pasta DTO tem apenas Create e Update.
-não precisa ter um dto de create. porque nos ja tipamos os dados. ja na
-hora de validar os dados para ver se realmente que oque voce esta mandando é uma string
+Controller: Responsável por receber as requisições HTTP, chamar os casos de uso e retornar a resposta ao cliente.
 
-06/03/2026
-criar o repository e o use-cases
+Module: O "maestro" que gerencia as dependências e conecta todas as partes do módulo.
 
-@ é um decorator
-cada arquivo depende de outra coisa para funcionar. o nosso repository é responsavel
-por consultar dados. e depende do prisma para fazer a consulta no banco
-nem toda função é obrigada a ter paramentro 
+Use-Cases (ou Service): Onde reside a regra de negócio. Ele decide o que deve ser feito.
+
+Repository: Camada de persistência. É o único responsável por consultar o banco de dados utilizando o Prisma (ORM).
+
+2. Regras de Dados e Segurança
+Enums (Enumerators): Utilizados para valores que são sempre fixos e constantes, como o tipo de pessoa (Física ou Jurídica).
+
+Segurança de Senha: Nunca gravamos senhas em texto puro no banco de dados. Elas devem passar por um processo de hashing antes da persistência.
+
+Migrations: Utilizadas para toda e qualquer alteração no banco de dados Neon (criação de tabelas, modificação de colunas ou atualizações de estrutura). O histórico de migrations garante que o banco esteja sempre sincronizado com o código.
+
+3. Persistência com Prisma ORM
+O Prisma é utilizado como ORM para facilitar a comunicação com o banco através de comandos prontos e tipados, evitando funções gigantescas de SQL manual.
+
+O arquivo prisma.database.ts atua como um adaptador/provedor, processando a string de conexão vinda do arquivo .env.
+
+4. Validação e DTOs
+Validadores: Garantem a integridade dos dados de entrada. Se um campo esperado como string receber um number, o validador interrompe o fluxo e lança uma exceção (ex: 400 Bad Request) em vez de permitir que o sistema processe o erro interno.
+
+DTOs (Data Transfer Objects): Localizados na pasta DTO, contendo apenas os arquivos de Create e Update. Embora a tipagem TypeScript ajude no desenvolvimento, o DTO com decorators (@) é essencial para validar os dados em tempo de execução.
+
+5. Organização de Pastas e Dependências
+A pasta src/todos centraliza as funcionalidades de tarefas, contendo suas próprias camadas de controller, module, service/use-cases e repository.
+
+Injeção de Dependência: Utilizamos Decorators (@) para sinalizar como as classes dependem umas das outras (ex: o Repository depende do Prisma).
+
+Nem toda função é obrigada a ter parâmetros; elas são moldadas conforme a necessidade da lógica de negócio.
+

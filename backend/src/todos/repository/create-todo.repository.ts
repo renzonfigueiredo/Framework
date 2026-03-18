@@ -4,6 +4,9 @@ import { CreateTodoDto } from "../dto/create-todo.dto";
 
 @Injectable()
 export class CreatetodoRepository {
+    create(data: CreateTodoDto) {
+        throw new Error("Method not implemented.");
+    }
     constructor(private readonly prisma: PrismaService) {}
 
     async execute(data: CreateTodoDto) {
