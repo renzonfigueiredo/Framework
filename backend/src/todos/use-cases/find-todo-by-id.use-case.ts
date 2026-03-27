@@ -3,6 +3,9 @@ import { FindTodoByIdRepository } from "../repository";
 
 @Injectable()
 export class FindTodoByIdUseCases {
+    findById(id: string) {
+      throw new Error('Method not implemented.');
+    }
     constructor(
         private readonly findTodoByIdRepository: FindTodoByIdRepository,
         private readonly logger: Logger,
