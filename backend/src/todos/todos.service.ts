@@ -4,20 +4,20 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 
 import {
   CreateTodoUseCases,
-  DeleteTodoUseCases,
+  DeleteTodoUseCase,
   FindTodoByIdUseCases,
   findAllTodosUseCases,
-  UpdateTodoUseCases
+  UpdateTodoUseCase
 } from './use-cases';
 
 @Injectable()
 export class TodosService {
   constructor(
     private readonly createTodoUseCases: CreateTodoUseCases,
-    private readonly updateTodoUseCases: UpdateTodoUseCases,
+    private readonly updateTodoUseCases: UpdateTodoUseCase,
     private readonly findTodoUseCases: FindTodoByIdUseCases,
     private readonly findAllTodoUseCases: findAllTodosUseCases,
-    private readonly deleteTodoUseCases: DeleteTodoUseCases
+    private readonly deleteTodoUseCases: DeleteTodoUseCase
   ) {} 
 
   async create(createTodoDto: CreateTodoDto) {
@@ -28,15 +28,15 @@ export class TodosService {
     return await this.findAllTodoUseCases.execute();
   }
 
-  async findById(id: string) {
-    return await this.findTodoUseCases.execute(id);
+  async findOne(id: number) {
+    return await this.findTodoUseCases.execute(id.toString()); 
   }
 
-  async update(id: string, updateTodoDto: UpdateTodoDto) {
-    return await this.updateTodoUseCases.execute(id, updateTodoDto);
+  async update(id: number, updateTodoDto: UpdateTodoDto) {
+    return await this.updateTodoUseCases.execute(id.toString(), updateTodoDto);
   }
 
-  async delete(id: string) {
-    return await this.deleteTodoUseCases.execute(id);
+  async remove(id: number) {
+    return await this.deleteTodoUseCases.execute(id.toString());
   }
 }
