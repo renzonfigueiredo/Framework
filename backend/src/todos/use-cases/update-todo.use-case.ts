@@ -1,28 +1,31 @@
 import { Injectable, Logger, NotFoundException } from "@nestjs/common";
-import { UpdateTodoRepository } from "../repository";
 import { UpdateTodoDto } from "../dto/update-todo.dto";
+import { UpdateTodoRepository } from "../repository";
+import { FindTodoByIdRepository } from "../repository/find-todo-by-id.repository";
 
 @Injectable()
-export class UpdateTodoUseCases {
+export class UpdateTodoUseCase {
     constructor(
         private readonly updateTodoRepository: UpdateTodoRepository,
-        private readonly logger: Logger,
+        private readonly FindTodoByIdRepository: FindTodoByIdRepository,
+        private readonly logger: Logger
     ) {}
+
     async execute(id: string, data: UpdateTodoDto) {
         try {
-            this.logger.log('Updating toDo...');
-            const todo = await this.updateTodoRepository.execute(id, data);
+            const todo = await this.FindTodoByIdRepository.findById(id);
+
             if (!todo) {
-                throw new NotFoundException("ToDo not found");
-                        }
-                        
-                        
-            this.logger.log('ToDo updated successfully');
+                throw new NotFoundException("toDo not found");
+            }
+
+            this.logger.log('Updating toDo...');
+            await this.updateTodoRepository.execute(id, data);
+            this.logger.log('toDo updated successfully');
             return todo;
         } catch (error) {
             this.logger.error(error);
-            throw error;
+            throw new Error("Failed to update toDo");
         }
     }
 }
-
