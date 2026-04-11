@@ -1,21 +1,47 @@
-import { title } from "process";
+import { Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsDate,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
-export class CreateTodoDto {
-
-    title: string;
-    description: string;
-    completed: boolean;
-    priority: TodoPriority;
-    dueAt: Date;
-    completedAt: Date;
-    userid: string;
-    createdAt: Date;
-    updateAt: Date;
-}
-
-enum TodoPriority {
+export enum TodoPriority {
   LOW = 'LOW',
   MEDIUM = 'MEDIUM',
   HIGH = 'HIGH',
 }
 
+export class CreateTodoDto {
+  @IsString()
+  @IsNotEmpty()
+  title: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  completed?: boolean;
+
+  @IsOptional()
+  @IsEnum(TodoPriority)
+  priority?: TodoPriority;
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  dueAt?: Date;
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  completedAt?: Date;
+
+  @IsUUID()
+  userId: string;
+}
