@@ -28,15 +28,15 @@ export class TodosService {
     return await this.findAllTodoUseCases.execute();
   }
 
-  async findOne(id: number) {
-    return await this.findTodoUseCases.execute(id.toString()); 
+  async findOne(id: string) {
+    return await this.findTodoUseCases.execute(id); 
   }
 
-  async update(id: number, updateTodoDto: UpdateTodoDto) {
-    return await this.updateTodoUseCases.execute(id.toString(), updateTodoDto);
+  async update(id: string, updateTodoDto: UpdateTodoDto) {
+    return await this.updateTodoUseCases.execute(id, updateTodoDto);
   }
 
-  async remove(id: number) {
-    return await this.deleteTodoUseCases.execute(id.toString());
+  async remove(id: string) {
+    return await this.deleteTodoUseCases.execute(id);
   }
 }
